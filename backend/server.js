@@ -36,15 +36,17 @@ app.post('/api/books', async (req, res) => {
 
     // Insert the new book data, including 'cover_image', into the 'books' table
     // .returning('id') is for PostgreSQL to get the ID of the newly inserted row
-    const [newBookId] = await knex(BOOKS_TABLE).insert({
-      title,
-      author,
-      publication_year,
-      cover_image // Include the new field here
-    }).returning('id');
+    const insertedRows = await knex(BOOKS_TABLE).insert({
+  title,
+  author,
+  publication_year,
+  cover_image
+}).returning('id'); // For PostgreSQL, this returns an array of objects like [{ id: N }]
 
-    // Fetch the newly created book by its ID to return the complete record
-    const newBook = await knex(BOOKS_TABLE).where({ id: newBookId }).first();
+// Extract the actual ID from the first object in the array
+const newBookId = insertedRows[0].id; 
+
+const newBook = await knex(BOOKS_TABLE).where({ id: newBookId }).first();
     res.status(201).json(newBook); // 201 Created status
   } catch (error) {
     console.error('Error creating book:', error);
