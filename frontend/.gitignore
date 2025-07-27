@@ -1,0 +1,30 @@
+# Git ignore file for book-management-app (Root Project)
+
+# Node modules for both backend and frontend
+node_modules/
+backend/node_modules/
+frontend/node_modules/
+
+# Environment variables (CRITICAL for security)
+.env                 # This specifically ignores your backend/.env file
+
+# Build outputs
+backend/build/       # If your backend generates any build output
+frontend/build/      # React build output
+
+# Dependency manager files
+.pnp
+.pnp.js
+
+# Log files
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Testing
+/coverage            # Coverage reports
+
+# OS specific files
+.DS_Store            # macOS files
+Thumbs.db            # Windows thumbnails
